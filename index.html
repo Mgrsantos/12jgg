@@ -6,6 +6,47 @@
 <title>Para o meu momo 💌</title>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
+  .carrossel {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(180, 80, 130, 0.15);
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .carrossel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .carrossel-track img {
+    min-width: 100%;
+    height: 320px;
+    object-fit: cover;
+  }
+
+  .carrossel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 0.8rem 0;
+    background: rgba(255,255,255,0.7);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e0a0c0;
+    transition: background 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+
+  .dot.active {
+    background: #c04880;
+    transform: scale(1.3);
+  }
   #intro-screen {
     position: fixed;
     inset: 0;
@@ -27,8 +68,8 @@
 
   #heart-container {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 320px;
+    height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,18 +77,18 @@
 
   #heart {
     position: absolute;
-    width: 200px;
-    height: 200px;
+    width: 320px;
+    height: 320px;
     background: #e05585;
-    clip-path: path('M100 170 C100 170 20 120 20 65 C20 35 45 15 70 15 C85 15 100 28 100 28 C100 28 115 15 130 15 C155 15 180 35 180 65 C180 120 100 170 100 170Z');
+    clip-path: path('M160 272 C160 272 32 192 32 104 C32 56 72 24 112 24 C136 24 160 44 160 44 C160 44 184 24 208 24 C248 24 288 56 288 104 C288 192 160 272 160 272Z');
     animation: heartbeat 1.2s ease-in-out infinite;
     transition: transform 0.4s ease;
   }
 
   #nossa-foto {
     position: absolute;
-    width: 120px;
-    height: 120px;
+    width: 190px;
+    height: 190px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid white;
@@ -358,7 +399,20 @@
     <div class="assinatura">Com amor, do seu momo. Te amo imensamente ♥</div>
   </div>
 
-  <span class="footer-heart">💕</span>
+  <div class="carrossel">
+  <div class="carrossel-track" id="carrossel-track">
+    <img src="foto1.jpg" alt="nós" />
+    <img src="foto2.jpg" alt="nós" />
+    <img src="foto3.jpg" alt="nós" />
+    <img src="foto4.jpg" alt="nós" />
+  </div>
+  <div class="carrossel-dots" id="carrossel-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</div>
 
 </div>
 
@@ -411,6 +465,20 @@
     spawnParticles();
     setTimeout(() => intro.classList.add('hide'), 500);
   });
+  // --- carrossel ---
+  const track = document.getElementById('carrossel-track');
+  const dots = document.querySelectorAll('.dot');
+  let current = 0;
+
+  function goTo(index) {
+    current = index;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  setInterval(() => goTo((current + 1) % dots.length), 2000);
 </script>
 
 </body>
