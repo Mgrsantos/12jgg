@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para o meu momo 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  #intro-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: linear-gradient(135deg, #ffe4f0, #fce8ff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  #intro-screen.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  #heart-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #heart {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: #e05585;
+    clip-path: path('M100 170 C100 170 20 120 20 65 C20 35 45 15 70 15 C85 15 100 28 100 28 C100 28 115 15 130 15 C155 15 180 35 180 65 C180 120 100 170 100 170Z');
+    animation: heartbeat 1.2s ease-in-out infinite;
+    transition: transform 0.4s ease;
+  }
+
+  #nossa-foto {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    z-index: 2;
+    animation: fadeInPhoto 0.8s ease 0.4s both;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  @keyframes fadeInPhoto {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  #intro-hint {
+    margin-top: 2rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9rem;
+    color: #c070a0;
+    font-weight: 600;
+    animation: blink 1.6s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 1.4rem;
+    z-index: 1000;
+    animation: burst linear forwards;
+  }
+
+  @keyframes burst {
+    0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffe4f0 0%, #fff0f5 30%, #fce8ff 60%, #e8f0ff 100%);
+    font-family: 'Quicksand', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .floaties {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .floaty {
+    position: absolute;
+    animation: floatUp linear infinite;
+    opacity: 0.5;
+    font-size: 1.4rem;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0.5; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .hero {
+    text-align: center;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .hero-date {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #c0608a;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.8rem, 8vw, 4.2rem);
+    color: #b84a7a;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    color: #c070a0;
+    font-weight: 500;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .heart-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #e08ab0;
+    font-size: 1.2rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .heart-divider::before,
+  .heart-divider::after {
+    content: '';
+    flex: 1;
+    height: 1.5px;
+    background: linear-gradient(to right, transparent, #e8a0c0, transparent);
+    max-width: 120px;
+  }
+
+  .moments {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .moment-card {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 1.4rem 1.6rem;
+    border: 1.5px solid rgba(230, 160, 200, 0.35);
+    animation: fadeIn 0.6s ease both;
+    box-shadow: 0 4px 20px rgba(200, 100, 150, 0.08);
+  }
+
+  .moment-card:nth-child(1) { animation-delay: 0.1s; }
+  .moment-card:nth-child(2) { animation-delay: 0.2s; }
+  .moment-card:nth-child(3) { animation-delay: 0.3s; }
+  .moment-card:nth-child(4) { animation-delay: 0.4s; }
+  .moment-card:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .moment-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .moment-card p {
+    font-size: 1rem;
+    color: #7a3560;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+
+  .moment-card .highlight {
+    color: #c04880;
+    font-weight: 700;
+  }
+
+  .carta {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 2rem 2rem;
+    border: 1.5px solid rgba(200, 130, 180, 0.3);
+    width: 100%;
+    box-shadow: 0 6px 30px rgba(180, 80, 130, 0.1);
+    animation: fadeIn 0.6s ease 0.55s both;
+  }
+
+  .carta-titulo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.9rem;
+    color: #b84a7a;
+    margin-bottom: 1.2rem;
+  }
+
+  .carta p {
+    font-size: 1rem;
+    color: #6b3055;
+    line-height: 1.85;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .carta p:last-child { margin-bottom: 0; }
+
+  .assinatura {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: #b84a7a;
+    text-align: right;
+    margin-top: 1.2rem;
+  }
+
+  .footer-heart {
+    font-size: 2.5rem;
+    animation: pulse 1.2s ease-in-out infinite;
+    display: block;
+    text-align: center;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+  }
+
+  .tag-feliz {
+    background: linear-gradient(135deg, #f9c6da, #f5a8cc);
+    color: #8b2557;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+  }
+</style>
+</head>
+<body>
+<!-- INTRO: coração que explode -->
+<div id="intro-screen">
+  <div id="heart-container">
+    <div id="heart"></div>
+    <img id="nossa-foto" src="foto.jpg" alt="Te amoooo" />
+  </div>
+  <p id="intro-hint">toque para abrir ✨</p>
+</div>
+<div class="floaties" id="floaties"></div>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="tag-feliz">💌 12 de junho</div>
+    <div class="hero-title">Meu Momo</div>
+    <div class="hero-subtitle">Com todo o meu amor, hoje e sempre 🌸</div>
+  </div>
+
+  <div class="heart-divider">♥</div>
+
+  <div class="moments">
+
+    <div class="moment-card">
+      <span class="moment-icon">🌟</span>
+      <p>Teve um dia que eu percebi que a minha parte favorita do dia era qualquer momento que você aparecia. Nem sei explicar direito <span class="highlight">você é literalmente LUZ.</span></p>
+    </div>
+
+    <div class="moment-card">
+      <span class="moment-icon">🩵</span>
+      <p>Eu adoro quando a gente ri de bobagem juntas. Aquelas risadas que não fazem sentido pra ninguém mais, mas pra mim são <span class="highlight">os melhores momentos de quando estamos juntas .</span></p>
+    </div>
+
+
+    <div class="moment-card">
+      <span class="moment-icon">🌷</span>
+      <p>Cada data que passo ao seu lado vira memória que eu guardo com cuidado. E hoje, o Dia dos Namorados, <span class="highlight">fica ainda mais especial porque é com você.</span></p>
+    </div>
+
+    <div class="moment-card">
+      <span class="moment-icon">💫</span>
+      <p>Você me faz querer ser melhor, me faz querer estar presente, me faz querer comemorar cada minutinho. <span class="highlight">Que sorte a minha ter você, Momo.</span></p>
+    </div>
+
+  </div>
+
+  <div class="heart-divider">♥</div>
+
+  <div class="carta">
+    <div class="carta-titulo">Momo,</div>
+    <p>
+      Hoje é um dia que eu adoro comemorar, não pela data em si, mas porque é uma chance a mais de te dizer o quanto você é especial pra mim e de saber que essa data é com você.
+    </p>
+    <p>
+      Tem uma coisa muito bonita em ter alguém com quem você quer dividir tudo: o dia bom, o dia ruim, as bobagens, os planos, os silêncios confortáveis, as intimidades  e as conversas que não acabam.
+    </p>
+    <p>
+      Você é essa pessoa pra mim, Momo. E eu fico feliz de poder te dizer isso olho no olho, por mensagem, ou do jeito que for, porque esse sentimento não cabe só numa data do calendário.
+    </p>
+    <p>
+      Feliz Dia das Namoradas. Obrigada por ser tão você, por estar ao meu lado, e por fazer cada momento nosso valer a pena. 🌸
+    </p>
+    <div class="assinatura">Com amor, do seu momo. Te amo imensamente ♥</div>
+  </div>
+
+  <span class="footer-heart">💕</span>
+
+</div>
+
+<script>
+  const emojis = ['💕','🌸','✨','💖','🌷','💗','🩷','🫶','💞','🌺'];
+  const container = document.getElementById('floaties');
+
+  function createFloaty() {
+    const el = document.createElement('div');
+    el.className = 'floaty';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+    const dur = 7 + Math.random() * 8;
+    el.style.animationDuration = dur + 's';
+    el.style.animationDelay = (Math.random() * 5) + 's';
+    container.appendChild(el);
+    setTimeout(() => el.remove(), (dur + 5) * 1000);
+  }
+
+  for (let i = 0; i < 18; i++) createFloaty();
+  setInterval(createFloaty, 1200);
+  // --- intro explosion ---
+  const intro = document.getElementById('intro-screen');
+  const heartEl = document.getElementById('heart');
+  const burstEmojis = ['💕','🌸','✨','💖','🌷','💗','🩷','🫶','💞','🌺'];
+
+  function spawnParticles() {
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.textContent = burstEmojis[Math.floor(Math.random() * burstEmojis.length)];
+      const angle = Math.random() * 2 * Math.PI;
+      const dist = 120 + Math.random() * 220;
+      p.style.left = cx + 'px';
+      p.style.top  = cy + 'px';
+      p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      p.style.animationDuration = (0.6 + Math.random() * 0.5) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1200);
+    }
+  }
+
+  intro.addEventListener('click', () => {
+    heartEl.style.transform = 'scale(2.5)';
+    heartEl.style.opacity = '0';
+    spawnParticles();
+    setTimeout(() => intro.classList.add('hide'), 500);
+  });
+</script>
+
+</body>
+</html>
